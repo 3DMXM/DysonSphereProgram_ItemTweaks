@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ItemTweaks
 {
-    [BepInPlugin("aoe.top.ItemTweaks", "[戴森球计划]物品叠加 Mod By:小莫", "1.1.0")]
+    [BepInPlugin("aoe.top.ItemTweaks", "[戴森球计划] 物品叠加 Mod By:小莫", "1.1.1")]
     public class ItemTweaks : BaseUnityPlugin
     {
         // 默认资源叠加倍率
@@ -15,10 +15,10 @@ namespace ItemTweaks
         public static ConfigEntry<int> userCount;
 
         // 启动脚本时会自动调用Awake()方法
-        private void Awake()
-        {
-            // InitializeGUI();
-        }
+        //private void Awake()
+        //{
+        //    // InitializeGUI();
+        //}
 
         // 注入脚本时会自动调用Start()方法 执行在Awake()方法后面
         [Obsolete]
@@ -33,32 +33,30 @@ namespace ItemTweaks
 
         }
         // 插件将自动循环Update()方法中的内容
-        private void Update()
-        {
-            // 如果用户修改了资源倍数的值
-            if (Count != userCount.Value)
-            {
-                //Debug.Log(String.Format("用户修改资源倍率为 {0}", userCount.Value));
-                //Count = userCount.Value;
+        //private void Update()
+        //{
+        //    // 如果用户修改了资源倍数的值
+        //    if (Count != userCount.Value)
+        //    {
+        //        //Debug.Log(String.Format("用户修改资源倍率为 {0}", userCount.Value));
+        //        //Count = userCount.Value;
 
-                ////StorageComponent Sc = new StorageComponent(Configs.freeMode.playerPackageSize);
-                ////Sc.InitConn();
-                ////Sc.NotifyStorageChange();
+        //        ////StorageComponent Sc = new StorageComponent(Configs.freeMode.playerPackageSize);
+        //        ////Sc.InitConn();
+        //        ////Sc.NotifyStorageChange();
 
-                //Player pl = new Player();
+        //        //Player pl = new Player();
 
-                //pl.OnDraw();
+        //        //pl.OnDraw();
 
-                //MyLoadStatic(Sc);
-            }
-        }
+        //        //MyLoadStatic(Sc);
+        //    }
+        //}
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(StorageComponent), "LoadStatic")]
         public static bool MyLoadStatic(StorageComponent __instance)
         {
-            Debug.Log("自定义 LoadStatic 被调用");
-
             if (!StorageComponent.staticLoaded)
             {
                 StorageComponent.itemIsFuel = new bool[12000];
