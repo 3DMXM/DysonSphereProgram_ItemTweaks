@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ItemTweaks
 {
-    [BepInPlugin("aoe.top.ItemTweaks", "[戴森球计划] 物品叠加 Mod By:小莫", "1.2.0")]
+    [BepInPlugin("aoe.top.ItemTweaks", "[戴森球计划] 物品叠加 Mod By:小莫", "1.2.1")]
     public class ItemTweaks : BaseUnityPlugin
     {
         // 默认资源叠加倍率
@@ -28,7 +28,7 @@ namespace ItemTweaks
             Count = userCount.Value;
 
             // 修改堆叠数量
-            ChangeItemTweaks();
+            //ChangeItemTweaks();   // 不能在启动时调用，否则会报错
             Debug.Log(String.Format("初始化,当前叠加倍率是{0}倍", Count));
             // 注入补丁
             Harmony.CreateAndPatchAll(typeof(ItemTweaks), null);
@@ -53,7 +53,7 @@ namespace ItemTweaks
         /// <param name="Change">是否是修改</param>
         /// <param name="oldCount">旧叠加倍率</param>
         /// <param name="newCount">新叠加倍率</param>
-        void ChangeItemTweaks(bool Change = false, int oldCount = -1, int newCount = -1)
+        static void ChangeItemTweaks(bool Change = false, int oldCount = -1, int newCount = -1)
         {
             //for (int i = 0; i < 12000; i++)
             //{
@@ -83,37 +83,28 @@ namespace ItemTweaks
                 else
                 {
                     dataArray[j].StackSize = dataArray[j].StackSize * Count;
+                    Debug.Log(String.Format("修改物品ID{0}的叠加倍率为{1}", j, dataArray[j].StackSize));
                     StorageComponent.itemStackCount[dataArray[j].ID] = dataArray[j].StackSize;
                 }
             }
 
         }
 
+        static bool change = false;
 
-        //[HarmonyPrefix]
-        //[HarmonyPatch(typeof(StorageComponent), "LoadStatic")]
-        //public static bool MyLoadStatic(StorageComponent __instance)
-        //{
-        //    if (!StorageComponent.staticLoaded)
-        //    {
-        //        StorageComponent.itemIsFuel = new bool[12000];
-        //        StorageComponent.itemStackCount = new int[12000];
-        //        for (int i = 0; i < 12000; i++)
-        //        {
-        //            StorageComponent.itemStackCount[i] = 1000;
-        //        }
-        //        ItemProto[] dataArray = LDB.items.dataArray;
-        //        for (int j = 0; j < dataArray.Length; j++)
-        //        {
-        //            StorageComponent.itemIsFuel[dataArray[j].ID] = (dataArray[j].HeatValue > 0L);
-        //            StorageComponent.itemStackCount[dataArray[j].ID] = dataArray[j].StackSize * Count;
-        //        }
-        //        StorageComponent.staticLoaded = true;
-        //    }
-        //    return false;
-        //}
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(StorageComponent), "LoadStatic")]
+        public static void MyLoadStatic(StorageComponent __instance)
+        {
+            if (!change)
+            {
+                // 让它只执行一次
+                ChangeItemTweaks();
+                change = true;
+            }
+        }
 
-        
+
 
     }
 }

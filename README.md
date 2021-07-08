@@ -1,8 +1,11 @@
 # 《戴森球计划(Dyson Sphere Program)》仓库/物品 叠加 Mod 可自定义叠加倍率
 
 Mod站：https://mod.3dmgame.com/mod/172571
+
 论坛：https://bbs.3dmgame.com/thread-6123856-1-1.html
+
 源码：https://github.com/3DMXM/DysonSphereProgram_ItemTweaks
+
 视频：https://www.bilibili.com/video/av373871915
 
 你是否和我有这样一个问题：玩到中期的时候，资源太多箱子不够装，大箱子太占地方，竖着叠太高又不美观，
@@ -38,6 +41,9 @@ Mod站：https://mod.3dmgame.com/mod/172571
 [video]https://www.bilibili.com/video/BV1eo4y1R7RQ[/video]
 
 ### 更新日志
+
+v1.2.1
+- 修复进游戏会报错的问题
 
 v1.2.0
 - 更新适配新版游戏，修复重进游戏会导致叠加失效的问题（2021.7.7）
